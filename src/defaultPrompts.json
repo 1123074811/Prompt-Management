@@ -1,0 +1,119 @@
+{
+  "categories": [
+    { "id": "cat-code-review", "name": "代码审查", "order": 0 },
+    { "id": "cat-testing", "name": "测试生成", "order": 1 },
+    { "id": "cat-explain", "name": "解释代码", "order": 2 },
+    { "id": "cat-refactor", "name": "重构优化", "order": 3 },
+    { "id": "cat-general", "name": "通用", "order": 4 }
+  ],
+  "prompts": [
+    {
+      "id": "prompt-review-1",
+      "title": "代码审查 - 完整版",
+      "content": "请对以下代码进行全面审查，检查以下方面：\n1. Bug 和潜在运行时错误\n2. 安全漏洞\n3. 性能问题\n4. 代码风格和命名规范\n5. 缺失的错误处理\n6. 未覆盖的边界情况\n\n针对发现的每个问题提供具体建议。",
+      "categoryId": "cat-code-review",
+      "order": 0,
+      "createdAt": 1700000000000,
+      "updatedAt": 1700000000000
+    },
+    {
+      "id": "prompt-review-2",
+      "title": "代码审查 - 快速版",
+      "content": "快速审查这段代码，仅关注关键 Bug、安全问题和重大改进建议，忽略代码风格细节。",
+      "categoryId": "cat-code-review",
+      "order": 1,
+      "createdAt": 1700000000000,
+      "updatedAt": 1700000000000
+    },
+    {
+      "id": "prompt-review-3",
+      "title": "PR 审查清单",
+      "content": "审查这个 PR：\n- 是否实现了描述中的功能？\n- 是否存在回归问题？\n- 代码是否可读且易于维护？\n- 测试是否充分？\n- 是否有性能影响？\n\n给出 批准 / 需要修改 的结论及理由。",
+      "categoryId": "cat-code-review",
+      "order": 2,
+      "createdAt": 1700000000000,
+      "updatedAt": 1700000000000
+    },
+    {
+      "id": "prompt-test-1",
+      "title": "生成单元测试",
+      "content": "为以下代码生成全面的单元测试，覆盖：\n1. 正常路径场景\n2. 边界情况（空输入、null、undefined）\n3. 错误条件\n4. 边界值\n\n使用项目已有的测试框架，测试名称需具有描述性。",
+      "categoryId": "cat-testing",
+      "order": 0,
+      "createdAt": 1700000000000,
+      "updatedAt": 1700000000000
+    },
+    {
+      "id": "prompt-test-2",
+      "title": "生成集成测试",
+      "content": "为以下模块编写集成测试。测试组件之间的交互，模拟外部依赖，验证端到端行为。使用项目已有的测试框架和模式。",
+      "categoryId": "cat-testing",
+      "order": 1,
+      "createdAt": 1700000000000,
+      "updatedAt": 1700000000000
+    },
+    {
+      "id": "prompt-explain-1",
+      "title": "解释代码",
+      "content": "用通俗易懂的语言解释以下代码：\n1. 整体功能是什么\n2. 逐步工作原理\n3. 使用了哪些不明显的模式或技巧\n4. 依赖和副作用\n\n假设读者是不熟悉此代码库的开发者。",
+      "categoryId": "cat-explain",
+      "order": 0,
+      "createdAt": 1700000000000,
+      "updatedAt": 1700000000000
+    },
+    {
+      "id": "prompt-explain-2",
+      "title": "小白式解释",
+      "content": "用最简单的语言解释这段代码，用日常生活中的比喻来说明，避免专业术语。假设你在向刚学编程的人解释。",
+      "categoryId": "cat-explain",
+      "order": 1,
+      "createdAt": 1700000000000,
+      "updatedAt": 1700000000000
+    },
+    {
+      "id": "prompt-refactor-1",
+      "title": "重构建议",
+      "content": "分析这段代码并提出重构改进建议：\n1. 违反 SOLID 原则的地方\n2. 减少代码重复（DRY）\n3. 改善函数签名和命名\n4. 简化复杂逻辑\n5. 提取可复用组件\n\n提供重构后的代码并对每处修改给出说明。",
+      "categoryId": "cat-refactor",
+      "order": 0,
+      "createdAt": 1700000000000,
+      "updatedAt": 1700000000000
+    },
+    {
+      "id": "prompt-refactor-2",
+      "title": "性能优化",
+      "content": "识别这段代码的性能瓶颈，提出优化建议：\n1. 时间复杂度改进\n2. 内存使用优化\n3. 不必要的计算或重渲染\n4. 缓存机会\n5. 适用的异步/并行执行\n\n尽可能提供优化后的代码及基准对比。",
+      "categoryId": "cat-refactor",
+      "order": 1,
+      "createdAt": 1700000000000,
+      "updatedAt": 1700000000000
+    },
+    {
+      "id": "prompt-general-1",
+      "title": "修复 Bug",
+      "content": "找出并修复以下代码中的所有 Bug，对每个 Bug：\n1. 描述 Bug 是什么\n2. 解释为什么会出现\n3. 提供修复方案\n4. 建议如何防止类似 Bug 再次发生",
+      "categoryId": "cat-general",
+      "order": 0,
+      "createdAt": 1700000000000,
+      "updatedAt": 1700000000000
+    },
+    {
+      "id": "prompt-general-2",
+      "title": "添加文档注释",
+      "content": "为以下代码添加完整的文档注释：\n1. 文件级文档注释\n2. 函数/方法的 JSDoc 或文档字符串\n3. 复杂逻辑的行内注释\n4. 必要的类型文档\n5. 公共 API 的使用示例\n\n遵循项目已有的文档风格。",
+      "categoryId": "cat-general",
+      "order": 1,
+      "createdAt": 1700000000000,
+      "updatedAt": 1700000000000
+    },
+    {
+      "id": "prompt-general-3",
+      "title": "代码翻译",
+      "content": "将以下代码从当前语言翻译为目标语言，保留：\n1. 逻辑和行为完全一致\n2. 使用目标语言的惯用模式\n3. 遵循目标语言的命名规范\n4. 适当使用标准库\n\n目标语言：",
+      "categoryId": "cat-general",
+      "order": 2,
+      "createdAt": 1700000000000,
+      "updatedAt": 1700000000000
+    }
+  ]
+}

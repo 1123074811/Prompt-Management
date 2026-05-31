@@ -1,0 +1,69 @@
+{
+  "name": "prompt-management",
+  "displayName": "AI 提示词管理器",
+  "description": "在侧边栏管理提示词，一键注入 Cursor、Copilot Chat 等 AI 对话输入框。",
+  "version": "0.1.0",
+  "publisher": "prompt-manager",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "prompt-manager",
+          "title": "AI 提示词管理器",
+          "icon": "resources/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "prompt-manager": [
+        {
+          "type": "webview",
+          "id": "prompt-manager.sidebar",
+          "name": "提示词"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "prompt-manager.openSidebar",
+        "title": "AI 提示词管理器: 打开侧边栏"
+      },
+      {
+        "command": "prompt-manager.addPrompt",
+        "title": "AI 提示词管理器: 新增提示词"
+      },
+      {
+        "command": "prompt-manager.addCategory",
+        "title": "AI 提示词管理器: 新增分类"
+      },
+      {
+        "command": "prompt-manager.importPrompts",
+        "title": "AI 提示词管理器: 导入提示词"
+      },
+      {
+        "command": "prompt-manager.exportPrompts",
+        "title": "AI 提示词管理器: 导出提示词"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run build",
+    "build": "esbuild ./src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node --minify",
+    "watch": "esbuild ./src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node --sourcemap --watch",
+    "lint": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.1",
+    "@types/vscode": "^1.85.0",
+    "esbuild": "^0.20.0",
+    "typescript": "^5.3.0"
+  }
+}
