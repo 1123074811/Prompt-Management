@@ -1,0 +1,13 @@
+.vscodeignore
+.vscode/**
+.gitignore
+tsconfig.json
+**/*.map
+**/*.ts
+!src/defaultPrompts.json
+node_modules/**
+src/**
+!src/defaultPrompts.json
+*.log
+commands-log.txt
+inject-debug.log
