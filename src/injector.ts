@@ -1,13 +1,27 @@
 import * as vscode from 'vscode';
+import { exec } from 'child_process';
 
 /**
  * 将提示词注入到 AI 对话输入框。
  *
  * 兼容 IDE：Cursor、VS Code + Copilot Chat、Trae、Windsurf、Antigravity 等
+ *
+ * Windsurf 的 Cascade 输入框是 webview，VS Code 原生命令无法直接写入。
+ * 因此采用 OS 级别键盘模拟（PowerShell SendKeys）发送 Ctrl+V 粘贴。
  */
 
 function sleep(ms: number): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+/** 通过 PowerShell SendKeys 模拟 Ctrl+V 粘贴（仅 Windows） */
+function simulateCtrlV(): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const cmd = `powershell -Command "Add-Type -AssemblyName System.Windows.Forms; [System.Windows.Forms.SendKeys]::SendWait('^v')"`;
+    exec(cmd, { timeout: 5000 }, (err) => {
+      if (err) { reject(err); } else { resolve(); }
+    });
+  });
 }
 
 export async function injectPrompt(text: string): Promise<{ success: boolean; message: string }> {
@@ -44,16 +58,26 @@ export async function injectPrompt(text: string): Promise<{ success: boolean; me
       }
     }
 
-    await sleep(300);
+    // 2. 等待面板和输入框获得焦点
+    await sleep(600);
 
-    // 2. 通过 windsurf.sendTextToChat({query}) 直接注入文本到输入框
+    // 3. 尝试 windsurf.sendTextToChat（如果有效则不需要键盘模拟）
     if (allCommands.includes('windsurf.sendTextToChat')) {
       try {
         await vscode.commands.executeCommand('windsurf.sendTextToChat', { query: text });
-        return { success: true, message: '已成功填入当前会话输入框！' };
+        // sendTextToChat 不报错但可能没效果，需要额外确认
+        // 暂时认为成功，但也尝试键盘模拟作为双保险
       } catch {
-        // 注入失败，走剪贴板兜底
+        // 忽略
       }
+    }
+
+    // 4. OS 级别键盘模拟 Ctrl+V（最可靠的方式，能作用于 webview 输入框）
+    try {
+      await simulateCtrlV();
+      return { success: true, message: '已自动粘贴到当前会话输入框！' };
+    } catch {
+      // 键盘模拟失败，走剪贴板兜底
     }
 
     return { success: true, message: '已聚焦当前会话，请直接按 Ctrl+V 粘贴' };
